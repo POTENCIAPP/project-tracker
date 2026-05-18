@@ -45,8 +45,11 @@ interface Db {
   projects: Record<string, ProjectData>;
 }
 
-const KV_URL = process.env.KV_REST_API_URL;
-const KV_TOKEN = process.env.KV_REST_API_TOKEN;
+// La integración de Vercel/Upstash inyecta uno u otro juego de nombres según
+// si es "Vercel KV" clásico o "Upstash for Redis" del Marketplace nuevo.
+const KV_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const KV_TOKEN =
+  process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 const DB_KEY = 'pt:db';
 
 export function storageMode(): 'kv' | 'memory' {
