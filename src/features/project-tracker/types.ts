@@ -22,11 +22,14 @@ export interface ProjectData {
   clientName: string;
   projectName: string;
   /**
-   * Token del link público de solo lectura para el cliente.
-   * Opcional: el módulo no lo usa, lo consume la capa de administración
-   * para generar y compartir el link. Mantiene a ProjectTracker agnóstico del acceso.
+   * Slug estable del cliente. Es lo que viaja en el link compartible
+   * (/c/<slug> o <slug>.dominio) y no cambia aunque se edite el proyecto.
+   * Opcional para no acoplar al módulo ProjectTracker, que es agnóstico del acceso.
    */
-  publicToken?: string;
+  slug?: string;
+  /** Timestamps de servidor (informativos). */
+  createdAt?: string;
+  updatedAt?: string;
   milestones: Milestone[];
 }
 

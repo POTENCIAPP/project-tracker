@@ -1,7 +1,8 @@
 /**
- * SharedProjectPage.tsx
- * Vista pública del cliente. Resuelve el token del link y muestra el
- * ProjectTracker en modo cliente (solo lectura). No requiere autenticación.
+ * ClientPortalPage.tsx
+ * Portal PÚBLICO del cliente, solo lectura. Resuelve el slug por path
+ * (/c/:slug) o por subdominio (gisbert.potenciapp.com) y muestra el
+ * ProjectTracker en modo cliente. Sin login, sin CRUD.
  */
 
 import { useEffect, useState } from 'react';
@@ -9,31 +10,38 @@ import { useParams } from 'react-router-dom';
 import { Unlink } from 'lucide-react';
 import { ProjectTracker, type ProjectData } from '@/features/project-tracker';
 import { AGENCY_NAME } from '@/lib/branding';
-import { resolveProjectByToken } from '@/lib/mockProjectStore';
+import { getProject } from '@/lib/api';
 
 type LoadState =
   | { status: 'loading' }
   | { status: 'found'; project: ProjectData }
   | { status: 'invalid' };
 
-export function SharedProjectPage() {
-  const { token } = useParams<{ token: string }>();
+/**
+ * @param slugOverride  cuando el slug viene del subdominio (no del path).
+ */
+export function ClientPortalPage({ slugOverride }: { slugOverride?: string }) {
+  const params = useParams<{ slug: string }>();
+  const slug = slugOverride ?? params.slug ?? '';
   const [state, setState] = useState<LoadState>({ status: 'loading' });
 
   useEffect(() => {
     let active = true;
-    if (!token) {
+    if (!slug) {
       setState({ status: 'invalid' });
       return;
     }
-    resolveProjectByToken(token).then((project) => {
-      if (!active) return;
-      setState(project ? { status: 'found', project } : { status: 'invalid' });
-    });
+    setState({ status: 'loading' });
+    getProject(slug)
+      .then((project) => {
+        if (!active) return;
+        setState(project ? { status: 'found', project } : { status: 'invalid' });
+      })
+      .catch(() => active && setState({ status: 'invalid' }));
     return () => {
       active = false;
     };
-  }, [token]);
+  }, [slug]);
 
   if (state.status === 'loading') {
     return (
@@ -57,8 +65,8 @@ export function SharedProjectPage() {
             Link no válido
           </h1>
           <p className="mt-1 text-sm text-slate-500">
-            Este link no existe o fue revocado. Pedile al equipo de {AGENCY_NAME} un
-            enlace actualizado.
+            Este link no existe o fue dado de baja. Pedile al equipo de{' '}
+            {AGENCY_NAME} un enlace actualizado.
           </p>
         </div>
       </div>
@@ -67,7 +75,6 @@ export function SharedProjectPage() {
 
   return (
     <div className="min-h-screen bg-slate-100">
-      {/* Banda de marca de la agencia */}
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-3xl px-4 py-3">
           <span className="font-bold tracking-tight text-slate-900">{AGENCY_NAME}</span>
