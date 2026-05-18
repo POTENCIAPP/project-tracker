@@ -12,8 +12,8 @@ import {
   getProject,
   updateProject,
   type Milestone,
-} from '../../lib/store';
-import { assertAdmin, handleError, readBody, sendJson } from '../../lib/http';
+} from '../../lib/store.js';
+import { assertAdmin, handleError, readBody, sendJson } from '../../lib/http.js';
 
 export default async function handler(
   req: VercelRequest,

@@ -5,8 +5,8 @@
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { adminToken, storageMode } from '../lib/store';
-import { sendJson } from '../lib/http';
+import { adminToken, storageMode } from '../lib/store.js';
+import { sendJson } from '../lib/http.js';
 
 export default function handler(_req: VercelRequest, res: VercelResponse): void {
   sendJson(res, 200, {

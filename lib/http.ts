@@ -4,7 +4,7 @@
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { adminToken } from './store';
+import { adminToken } from './store.js';
 
 export function sendJson(res: VercelResponse, status: number, data: unknown): void {
   res.status(status).setHeader('Content-Type', 'application/json');

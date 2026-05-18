@@ -5,8 +5,8 @@
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { createProject, listProjects } from '../../lib/store';
-import { assertAdmin, handleError, readBody, sendJson } from '../../lib/http';
+import { createProject, listProjects } from '../../lib/store.js';
+import { assertAdmin, handleError, readBody, sendJson } from '../../lib/http.js';
 
 export default async function handler(
   req: VercelRequest,
