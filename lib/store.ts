@@ -209,76 +209,110 @@ function uniqueSlug(base: string, db: Db): string {
   return `${base}-${n}`;
 }
 
-/** Dataset inicial: un proyecto demo para poder ver el deploy de una. */
+/** Dataset inicial: el proyecto real de Gisbert Refrigeraciones. */
 function seedDb(): Db {
-  const now = new Date().toISOString();
+  const createdAt = '2026-05-06T14:00:00.000Z';
+  const lastUpdated = '2026-05-18T12:00:00.000Z';
   return {
     projects: {
-      demo: {
-        slug: 'demo',
-        projectId: 'PRJ-2026-0142',
-        clientName: 'María Fernández',
-        projectName: 'Plataforma de E-commerce B2B',
-        createdAt: now,
-        updatedAt: now,
+      gisbert: {
+        slug: 'gisbert',
+        projectId: 'PRJ-2026-0001',
+        clientName: 'Gisbert Refrigeraciones',
+        projectName: 'Nueva Landing + Sistema de Gestión',
+        createdAt,
+        updatedAt: lastUpdated,
         milestones: [
           {
             id: 'ms-01',
             order: 1,
-            title: 'Discovery del Negocio',
+            title: 'Discovery y alineación',
             description:
-              'Relevamiento de objetivos, análisis de la competencia y definición del alcance funcional del proyecto.',
+              'Cierre del alcance funcional, firma de la propuesta y recolección de inputs visuales y de negocio para arrancar la ejecución.',
             status: 'completed',
             deliverables: [
-              'Documento de requerimientos',
-              'Mapa de stakeholders',
-              'Definición de alcance (SOW)',
-            ],
-            lastUpdated: '2026-04-08T14:00:00.000Z',
-          },
-          {
-            id: 'ms-02',
-            order: 2,
-            title: 'Diseño UI/UX',
-            description:
-              'Arquitectura de información, wireframes y diseño visual de alta fidelidad de las pantallas clave.',
-            status: 'client_review',
-            deliverables: [
-              'Wireframes de los flujos principales',
-              'Sistema de diseño (UI Kit)',
-              'Prototipo navegable en Figma',
+              'Alcance funcional cerrado (landing + sistema)',
+              'Propuesta económica firmada',
+              'Definición de stack técnico',
+              'Solicitud de inputs visuales al equipo Gisbert',
             ],
             lastUpdated: '2026-05-06T14:00:00.000Z',
           },
           {
-            id: 'ms-03',
-            order: 3,
-            title: 'Desarrollo Core',
+            id: 'ms-02',
+            order: 2,
+            title: 'Rediseño de la Landing',
             description:
-              'Implementación del frontend, integración con la API y desarrollo de las funcionalidades centrales.',
+              'Renovación visual y de contenido de la landing institucional: nueva identidad, materiales reales del taller y una sección que humaniza a la empresa.',
             status: 'in_progress',
             deliverables: [
-              'Maquetado responsive',
-              'Integración de autenticación',
-              'Módulo de pagos',
-              'Panel de administración',
+              'Rediseño corporativo (paleta, tipografías, layout)',
+              'Integración de fotos reales del taller y del equipo',
+              'Video institucional generado con IA',
+              'Sección "Quiénes están detrás"',
+              'Limpieza de secciones obsoletas (capacitaciones)',
             ],
-            lastUpdated: '2026-05-14T14:00:00.000Z',
+            lastUpdated: '2026-05-18T12:00:00.000Z',
+          },
+          {
+            id: 'ms-03',
+            order: 3,
+            title: 'Sistema — Productos compuestos y stock',
+            description:
+              'Modelo de productos con subitems: productos unitarios y productos compuestos con lista de materiales (BOM) que descuentan stock automáticamente.',
+            status: 'pending',
+            deliverables: [
+              'Alta y edición de productos unitarios',
+              'Productos compuestos con BOM (lista de materiales)',
+              'Descuento automático de stock de materiales al vender un compuesto',
+              'Vista de stock unificada',
+            ],
+            lastUpdated: '2026-05-06T14:00:00.000Z',
           },
           {
             id: 'ms-04',
             order: 4,
-            title: 'Demo y Ajustes Finales',
+            title: 'Sistema — Órdenes de Fabricación digitales',
             description:
-              'Pruebas de calidad, corrección de los últimos detalles y puesta en producción del proyecto.',
+              'Reemplazo del flujo manual: cada venta puede generar Órdenes de Fabricación con estados de avance, vinculadas al producto y al cliente.',
             status: 'pending',
             deliverables: [
-              'Testing QA integral',
-              'Optimización de performance',
-              'Deploy a producción',
-              'Capacitación al cliente',
+              'Generación de OF a partir de una venta',
+              'Estados de avance (pendiente / en producción / lista)',
+              'Vinculación OF ↔ venta ↔ cliente',
+              'Listado y filtros de OF',
             ],
-            lastUpdated: '2026-04-30T14:00:00.000Z',
+            lastUpdated: '2026-05-06T14:00:00.000Z',
+          },
+          {
+            id: 'ms-05',
+            order: 5,
+            title: 'Sistema — Ventas y Facturación',
+            description:
+              'Visibilidad y control del ciclo de facturación: una venta puede tener varias facturas, con badges que muestran el avance, y exportación directa al canal de comunicación del cliente.',
+            status: 'pending',
+            deliverables: [
+              'Badge de estado por venta (no facturado / parcial con % / facturado)',
+              'Facturación parcial y total',
+              'Múltiples facturas asociadas a una misma venta',
+              'Exportación de facturas a WhatsApp',
+            ],
+            lastUpdated: '2026-05-06T14:00:00.000Z',
+          },
+          {
+            id: 'ms-06',
+            order: 6,
+            title: 'QA, deploy y capacitación',
+            description:
+              'Pruebas finales del sistema completo, puesta en producción y entrenamiento del equipo Gisbert para que opere la solución de forma autónoma.',
+            status: 'pending',
+            deliverables: [
+              'Testing integral end-to-end',
+              'Despliegue a producción',
+              'Capacitación al equipo Gisbert',
+              'Documento de uso interno',
+            ],
+            lastUpdated: '2026-05-06T14:00:00.000Z',
           },
         ],
       },
