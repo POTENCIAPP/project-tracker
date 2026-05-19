@@ -111,12 +111,6 @@ export function LoginPage() {
           </form>
         </div>
 
-        {/* Credencial de prueba — quitar al conectar el backend real */}
-        <div className="mt-3 rounded-xl border border-dashed border-slate-300 bg-white/60 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Demo:</span> admin@potenciapp.com
-          {'  ·  '}
-          contraseña <span className="font-mono">demo1234</span>
-        </div>
       </div>
     </div>
   );

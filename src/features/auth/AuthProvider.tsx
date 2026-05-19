@@ -19,9 +19,9 @@ import type { AdminUser, AuthContextValue, AuthStatus } from './types';
 
 /* === MOCK AUTH ============================================================ */
 const DEMO_ADMIN = {
-  email: 'admin@potenciapp.com',
-  password: 'demo1234',
-  user: { id: 'usr-admin-1', email: 'admin@potenciapp.com', name: 'Equipo Potenciapp' },
+  email: 'admin@admin.com',
+  password: 'PotenciappAdmin!',
+  user: { id: 'usr-admin-1', email: 'admin@admin.com', name: 'Equipo Potenciapp' },
 } as const;
 
 const SESSION_KEY = 'pt_admin_session';
