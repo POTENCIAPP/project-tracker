@@ -36,11 +36,14 @@ export class HttpError extends Error {
  * header `x-pt-admin` con ese valor. Si NO está configurado, se permite
  * (modo demo) — el front muestra un aviso de que falta endurecer esto.
  */
-export function assertAdmin(req: VercelRequest): void {
+export function isAdmin(req: VercelRequest): boolean {
   const token = adminToken();
-  if (!token) return; // modo demo: sin protección de servidor
-  const sent = req.headers['x-pt-admin'];
-  if (sent !== token) {
+  if (!token) return true; // modo demo: sin protección de servidor
+  return req.headers['x-pt-admin'] === token;
+}
+
+export function assertAdmin(req: VercelRequest): void {
+  if (!isAdmin(req)) {
     throw new HttpError(401, 'No autorizado: token de admin inválido o ausente.');
   }
 }

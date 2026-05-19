@@ -18,6 +18,8 @@
  * ----------------------------------------------------------------------------
  */
 
+import { hashPassword, verifyPassword } from './auth.js';
+
 export type MilestoneStatus = 'pending' | 'in_progress' | 'client_review' | 'completed';
 
 export interface Milestone {
@@ -41,8 +43,17 @@ export interface ProjectData {
   updatedAt: string;
 }
 
+/** Usuario cliente: puede iniciar sesión y ver el dashboard de UN proyecto. */
+export interface ClientUser {
+  username: string; // clave (lowercase)
+  slug: string; // proyecto al que tiene acceso
+  pass: string; // hash scrypt (scrypt$salt$hash)
+  createdAt: string;
+}
+
 interface Db {
   projects: Record<string, ProjectData>;
+  users: Record<string, ClientUser>;
 }
 
 // La integración de Vercel/Upstash inyecta uno u otro juego de nombres según
@@ -104,6 +115,8 @@ async function readDb(): Promise<Db> {
   try {
     const parsed = JSON.parse(raw) as Db;
     if (!parsed || typeof parsed.projects !== 'object') return seedDb();
+    // Back-compat: documentos viejos no tienen `users`.
+    if (!parsed.users || typeof parsed.users !== 'object') parsed.users = {};
     return parsed;
   } catch {
     return seedDb();
@@ -182,6 +195,80 @@ export async function deleteProject(slug: string): Promise<boolean> {
   delete db.projects[slug];
   await writeDb(db);
   return true;
+}
+
+/* ===== Usuarios cliente =================================================== */
+
+export interface PublicUser {
+  username: string;
+  slug: string;
+  projectName: string;
+  createdAt: string;
+}
+
+function normUser(u: string): string {
+  return u.trim().toLowerCase();
+}
+
+export async function listUsers(): Promise<PublicUser[]> {
+  const db = await readDb();
+  return Object.values(db.users)
+    .map((u) => ({
+      username: u.username,
+      slug: u.slug,
+      projectName: db.projects[u.slug]?.projectName ?? '(proyecto eliminado)',
+      createdAt: u.createdAt,
+    }))
+    .sort((a, b) => a.username.localeCompare(b.username));
+}
+
+export async function createUser(input: {
+  username: string;
+  password: string;
+  slug: string;
+}): Promise<PublicUser> {
+  const username = normUser(input.username);
+  if (username.length < 3) throw new Error('El usuario debe tener al menos 3 caracteres.');
+  if (!input.password || input.password.length < 6)
+    throw new Error('La contraseña debe tener al menos 6 caracteres.');
+  const db = await readDb();
+  if (!db.projects[input.slug]) throw new Error('El proyecto indicado no existe.');
+  if (db.users[username]) throw new Error('Ese usuario ya existe.');
+  const user: ClientUser = {
+    username,
+    slug: input.slug,
+    pass: hashPassword(input.password),
+    createdAt: new Date().toISOString(),
+  };
+  db.users[username] = user;
+  await writeDb(db);
+  return {
+    username,
+    slug: user.slug,
+    projectName: db.projects[user.slug]?.projectName ?? '',
+    createdAt: user.createdAt,
+  };
+}
+
+export async function deleteUser(username: string): Promise<boolean> {
+  const db = await readDb();
+  const key = normUser(username);
+  if (!db.users[key]) return false;
+  delete db.users[key];
+  await writeDb(db);
+  return true;
+}
+
+/** Devuelve { username, slug } si las credenciales son válidas; si no, null. */
+export async function verifyCredentials(
+  username: string,
+  password: string,
+): Promise<{ username: string; slug: string } | null> {
+  const db = await readDb();
+  const user = db.users[normUser(username)];
+  if (!user) return null;
+  if (!verifyPassword(password, user.pass)) return null;
+  return { username: user.username, slug: user.slug };
 }
 
 /* ===== Utilidades ========================================================= */
@@ -317,5 +404,6 @@ function seedDb(): Db {
         ],
       },
     },
+    users: {},
   };
 }

@@ -16,7 +16,7 @@ import {
   type ProjectData,
 } from '@/features/project-tracker';
 import { AGENCY_NAME } from '@/lib/branding';
-import { getProject, saveProject } from '@/lib/api';
+import { adminGetProject, saveProject } from '@/lib/api';
 import { buildClientUrl, subdomainModeEnabled } from '@/lib/clientSlug';
 import { CopyButton } from '@/components/CopyButton';
 
@@ -39,7 +39,7 @@ export function AdminProjectPage() {
   useEffect(() => {
     let active = true;
     setState({ status: 'loading' });
-    getProject(slug)
+    adminGetProject(slug)
       .then((project) => {
         if (!active) return;
         setState(project ? { status: 'ready', project } : { status: 'notfound' });

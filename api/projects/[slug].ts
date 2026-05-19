@@ -13,7 +13,14 @@ import {
   updateProject,
   type Milestone,
 } from '../../lib/store.js';
-import { assertAdmin, handleError, readBody, sendJson } from '../../lib/http.js';
+import {
+  assertAdmin,
+  handleError,
+  isAdmin,
+  readBody,
+  sendJson,
+} from '../../lib/http.js';
+import { bearer, verifySession } from '../../lib/auth.js';
 
 export default async function handler(
   req: VercelRequest,
@@ -27,6 +34,15 @@ export default async function handler(
     }
 
     if (req.method === 'GET') {
+      // Acceso: admin (token) O usuario cliente con sesión para ESTE proyecto.
+      const session = verifySession(bearer(req));
+      const allowed = isAdmin(req) || (session !== null && session.s === slug);
+      if (!allowed) {
+        sendJson(res, 401, {
+          error: 'Necesitás iniciar sesión para ver este proyecto.',
+        });
+        return;
+      }
       const project = await getProject(slug);
       if (!project) {
         sendJson(res, 404, { error: 'Proyecto no encontrado.' });

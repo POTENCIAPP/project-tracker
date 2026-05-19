@@ -12,6 +12,7 @@ import { Link, Navigate, Route, Routes } from 'react-router-dom';
 import { LoginPage, ProtectedRoute } from '@/features/auth';
 import { AdminClientsPage } from '@/pages/AdminClientsPage';
 import { AdminProjectPage } from '@/pages/AdminProjectPage';
+import { AdminUsersPage } from '@/pages/AdminUsersPage';
 import { ClientPortalPage } from '@/pages/ClientPortalPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { AGENCY_NAME } from '@/lib/branding';
@@ -55,6 +56,7 @@ export default function App() {
 
       <Route element={<ProtectedRoute />}>
         <Route path="/admin" element={<AdminClientsPage />} />
+        <Route path="/admin/usuarios" element={<AdminUsersPage />} />
         <Route path="/admin/c/:slug" element={<AdminProjectPage />} />
       </Route>
 

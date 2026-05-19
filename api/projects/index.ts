@@ -14,6 +14,7 @@ export default async function handler(
 ): Promise<void> {
   try {
     if (req.method === 'GET') {
+      assertAdmin(req); // la lista completa es solo para el panel admin
       const projects = await listProjects();
       const summary = projects.map((p) => {
         const total = p.milestones.length;

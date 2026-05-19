@@ -89,6 +89,13 @@ export function AdminClientsPage() {
             <span className="ml-1.5 text-sm font-normal text-slate-400">· Clientes</span>
           </div>
           <div className="flex items-center gap-3">
+            <Link
+              to="/admin/usuarios"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50"
+            >
+              <Users className="h-3.5 w-3.5" aria-hidden="true" />
+              Usuarios
+            </Link>
             <span className="hidden text-sm text-slate-500 sm:inline">{user?.email}</span>
             <button
               type="button"
