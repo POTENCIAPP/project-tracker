@@ -263,7 +263,7 @@ export function AdminClientsPage() {
                   <div className="mt-3 flex items-center gap-3">
                     <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-100">
                       <div
-                        className="h-full rounded-full bg-emerald-500 transition-all"
+                        className="h-full rounded-full bg-pp-green transition-all"
                         style={{ width: `${c.progress.percent}%` }}
                       />
                     </div>

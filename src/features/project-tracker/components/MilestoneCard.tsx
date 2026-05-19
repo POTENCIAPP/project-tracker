@@ -35,8 +35,8 @@ export function MilestoneCard({
 
   return (
     <article
-      className={`rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md ${
-        isHighlighted ? 'ring-2 ring-blue-500/70' : ''
+      className={`pp-card rounded-2xl p-6 transition-shadow hover:shadow-lg ${
+        isHighlighted ? 'ring-2 ring-pp-green/40' : ''
       }`}
     >
       {/* Encabezado de la tarjeta */}

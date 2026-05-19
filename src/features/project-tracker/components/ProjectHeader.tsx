@@ -44,7 +44,7 @@ export function ProjectHeader({ data, role, progress, onUpdateProject }: Project
   };
 
   return (
-    <header className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <header className="pp-card rounded-2xl p-6 sm:p-8">
       {editing ? (
         <div className="space-y-4">
           <Field label="Nombre del proyecto">
@@ -86,7 +86,7 @@ export function ProjectHeader({ data, role, progress, onUpdateProject }: Project
         <>
           <div className="flex items-start justify-between gap-4">
             <div className="flex flex-col gap-1">
-              <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-slate-900 px-2.5 py-1 text-xs font-medium text-white">
+              <span className="pp-chip w-fit bg-pp-ink text-white">
                 <BadgeIcon className="h-3.5 w-3.5" strokeWidth={2.25} aria-hidden="true" />
                 {isAdmin ? 'Panel de gestión' : 'Portal del cliente'}
               </span>
@@ -103,10 +103,7 @@ export function ProjectHeader({ data, role, progress, onUpdateProject }: Project
                     <span className="font-mono text-xs">{data.projectId}</span>
                   </>
                 ) : (
-                  <>
-                    Hola <span className="font-medium text-slate-700">{data.clientName}</span>, este
-                    es el avance en tiempo real de tu proyecto.
-                  </>
+                  <>Este es el avance en tiempo real de tu proyecto.</>
                 )}
               </p>
             </div>

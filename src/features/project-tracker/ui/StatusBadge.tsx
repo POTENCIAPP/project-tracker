@@ -10,9 +10,7 @@ export function StatusBadge({ status }: { status: MilestoneStatus }) {
   const meta = STATUS_META[status];
   const { Icon } = meta;
   return (
-    <span
-      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium ${meta.badgeClass}`}
-    >
+    <span className={`pp-chip shrink-0 ${meta.badgeClass}`}>
       <Icon className="h-3.5 w-3.5" strokeWidth={2.25} aria-hidden="true" />
       {meta.label}
     </span>

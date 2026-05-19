@@ -18,7 +18,7 @@ export function DeliverableList({ deliverables, completed }: DeliverableListProp
           <span
             className={`mt-px grid h-4 w-4 shrink-0 place-items-center rounded border transition ${
               completed
-                ? 'border-emerald-500 bg-emerald-500 text-white'
+                ? 'border-pp-green bg-pp-green text-white'
                 : 'border-slate-300 bg-white'
             }`}
             aria-hidden="true"

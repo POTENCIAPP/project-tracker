@@ -9,7 +9,7 @@ import type { ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, LogOut } from 'lucide-react';
 import { useAuth } from '@/features/auth';
-import { AGENCY_NAME } from '@/lib/branding';
+import { BRAND } from '@/lib/brand';
 import { StorageBanner } from '@/components/StorageBanner';
 import { AdminTokenField } from '@/components/AdminTokenField';
 
@@ -38,13 +38,17 @@ export function AdminShell({ section, children, back, onTokenSaved }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className="min-h-screen bg-pp-paper">
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-3">
           <div className="flex items-center gap-4">
-            <span className="font-bold tracking-tight text-slate-900">
-              {AGENCY_NAME}
-            </span>
+            <Link to="/admin" aria-label="Potenciapp">
+              <img
+                src={BRAND.wordmarkLight}
+                alt="Potenciapp"
+                className="h-7 w-auto"
+              />
+            </Link>
             <nav className="flex items-center gap-1">
               <Link to="/admin" className={tab(section === 'clientes')}>
                 Clientes

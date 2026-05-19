@@ -19,7 +19,7 @@ export function StatusSelect({ value, onChange }: StatusSelectProps) {
         value={value}
         onChange={(e) => onChange(e.target.value as MilestoneStatus)}
         aria-label="Cambiar estado del hito"
-        className="cursor-pointer appearance-none rounded-lg border border-slate-200 bg-white py-1.5 pl-3 pr-9 text-sm font-medium text-slate-700 outline-none transition hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
+        className="cursor-pointer appearance-none rounded-lg border border-slate-200 bg-white py-1.5 pl-3 pr-9 text-sm font-medium text-slate-700 outline-none transition hover:border-slate-300 focus:border-pp-green focus:ring-2 focus:ring-pp-green/30"
       >
         {STATUS_ORDER.map((status) => (
           <option key={status} value={status}>

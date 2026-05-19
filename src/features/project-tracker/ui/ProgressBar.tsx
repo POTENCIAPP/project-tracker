@@ -25,7 +25,7 @@ export function ProgressBar({ completed, total, inProgress, percent }: ProgressS
         aria-label="Progreso global del proyecto"
       >
         <div
-          className="h-full rounded-full bg-emerald-500 transition-[width] duration-700 ease-out"
+          className="h-full rounded-full bg-pp-green transition-[width] duration-700 ease-out"
           style={{ width: `${percent}%` }}
         />
       </div>

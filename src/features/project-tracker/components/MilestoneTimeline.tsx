@@ -97,7 +97,7 @@ function MilestoneRow({
       <div className="relative flex flex-col items-center">
         {isActive && (
           <span
-            className="absolute left-1/2 top-0 h-9 w-9 -translate-x-1/2 animate-ping rounded-full bg-blue-400 opacity-25"
+            className="absolute left-1/2 top-0 h-9 w-9 -translate-x-1/2 animate-ping rounded-full bg-pp-lime opacity-25"
             aria-hidden="true"
           />
         )}
@@ -119,7 +119,7 @@ function MilestoneRow({
             {...listeners}
             aria-label={`Reordenar hito: ${milestone.title}`}
             title="Arrastrar para reordenar"
-            className={`mt-2 rounded-md p-1 text-slate-300 transition hover:bg-slate-100 hover:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40 ${
+            className={`mt-2 rounded-md p-1 text-slate-300 transition hover:bg-slate-100 hover:text-slate-500 focus:outline-none focus:ring-2 focus:ring-pp-green/40 ${
               isDragging ? 'cursor-grabbing text-slate-500' : 'cursor-grab'
             }`}
           >
@@ -130,7 +130,7 @@ function MilestoneRow({
         {!isLast && (
           <div
             className={`mt-1.5 w-0.5 flex-1 rounded-full ${
-              isCompleted ? 'bg-emerald-400' : 'bg-slate-200'
+              isCompleted ? 'bg-pp-green' : 'bg-slate-200'
             }`}
             aria-hidden="true"
           />
@@ -140,7 +140,7 @@ function MilestoneRow({
       {/* Tarjeta del hito */}
       <div
         className={`flex-1 ${isLast ? '' : 'pb-6'} ${
-          isDragging ? 'rounded-xl ring-2 ring-blue-500/60' : ''
+          isDragging ? 'rounded-xl ring-2 ring-pp-green/60' : ''
         }`}
       >
         <MilestoneCard

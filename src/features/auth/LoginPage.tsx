@@ -5,8 +5,8 @@
 
 import { useState, type FormEvent } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Loader2, LockKeyhole } from 'lucide-react';
-import { AGENCY_NAME } from '@/lib/branding';
+import { Loader2 } from 'lucide-react';
+import { BRAND } from '@/lib/brand';
 import { useAuth } from './useAuth';
 
 const FIELD =
@@ -42,17 +42,19 @@ export function LoginPage() {
   };
 
   return (
-    <div className="grid min-h-screen place-items-center bg-slate-100 p-4">
+    <div className="grid min-h-screen place-items-center bg-pp-paper p-4">
       <div className="w-full max-w-sm">
-        <div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
-          <div className="grid h-11 w-11 place-items-center rounded-xl bg-slate-900 text-white">
-            <LockKeyhole className="h-5 w-5" aria-hidden="true" />
-          </div>
-          <h1 className="mt-4 text-xl font-bold tracking-tight text-slate-900">
+        <div className="pp-card rounded-2xl p-7">
+          <img
+            src={BRAND.wordmarkLight}
+            alt="Potenciapp"
+            className="h-8 w-auto"
+          />
+          <h1 className="mt-5 text-xl font-bold tracking-tight text-pp-ink">
             Acceso del equipo
           </h1>
           <p className="mt-1 text-sm text-slate-500">
-            {AGENCY_NAME} · Panel de gestión de proyectos
+            Panel de gestión de proyectos
           </p>
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">

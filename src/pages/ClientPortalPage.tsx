@@ -7,9 +7,10 @@
 
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import { useParams } from 'react-router-dom';
-import { Loader2, LockKeyhole, LogOut, Unlink } from 'lucide-react';
+import { Loader2, LogOut, Unlink } from 'lucide-react';
 import { ProjectTracker, type ProjectData } from '@/features/project-tracker';
 import { AGENCY_NAME } from '@/lib/branding';
+import { BRAND } from '@/lib/brand';
 import {
   ApiError,
   clientLogin,
@@ -103,7 +104,7 @@ export function ClientPortalPage({ slugOverride }: { slugOverride?: string }) {
 
   if (state.status === 'checking') {
     return (
-      <div className="grid min-h-screen place-items-center bg-slate-100">
+      <div className="grid min-h-screen place-items-center bg-pp-paper">
         <div className="flex items-center gap-2.5 text-sm text-slate-500">
           <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
           Cargando proyecto…
@@ -114,8 +115,13 @@ export function ClientPortalPage({ slugOverride }: { slugOverride?: string }) {
 
   if (state.status === 'invalid') {
     return (
-      <div className="grid min-h-screen place-items-center bg-slate-100 p-4">
-        <div className="max-w-sm rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+      <div className="grid min-h-screen place-items-center bg-pp-paper p-4">
+        <div className="pp-card max-w-sm rounded-2xl p-8 text-center">
+          <img
+            src={BRAND.wordmarkLight}
+            alt="Potenciapp"
+            className="mx-auto mb-6 h-7 w-auto"
+          />
           <div className="mx-auto grid h-11 w-11 place-items-center rounded-xl bg-slate-100 text-slate-400">
             <Unlink className="h-5 w-5" aria-hidden="true" />
           </div>
@@ -133,17 +139,19 @@ export function ClientPortalPage({ slugOverride }: { slugOverride?: string }) {
 
   if (state.status === 'login') {
     return (
-      <div className="grid min-h-screen place-items-center bg-slate-100 p-4">
+      <div className="grid min-h-screen place-items-center bg-pp-paper p-4">
         <div className="w-full max-w-sm">
-          <div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
-            <div className="grid h-11 w-11 place-items-center rounded-xl bg-slate-900 text-white">
-              <LockKeyhole className="h-5 w-5" aria-hidden="true" />
-            </div>
-            <h1 className="mt-4 text-xl font-bold tracking-tight text-slate-900">
+          <div className="pp-card rounded-2xl p-7">
+            <img
+              src={BRAND.wordmarkLight}
+              alt="Potenciapp"
+              className="h-8 w-auto"
+            />
+            <h1 className="mt-5 text-xl font-bold tracking-tight text-pp-ink">
               Portal del proyecto
             </h1>
             <p className="mt-1 text-sm text-slate-500">
-              {AGENCY_NAME} · Ingresá con el usuario que te pasamos
+              Ingresá con el usuario que te pasamos
             </p>
 
             <form onSubmit={handleLogin} className="mt-6 space-y-4">
@@ -208,24 +216,59 @@ export function ClientPortalPage({ slugOverride }: { slugOverride?: string }) {
 
   // status === 'ready'
   return (
-    <div className="min-h-screen bg-slate-100">
-      <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-3">
-          <span className="font-bold tracking-tight text-slate-900">{AGENCY_NAME}</span>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50"
-          >
-            <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
-            Salir
-          </button>
+    <div className="min-h-screen bg-pp-paper">
+      <div className="pp-grad text-white">
+        <header className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-5">
+          <img
+            src={BRAND.wordmarkDark}
+            alt="Potenciapp"
+            className="h-8 w-auto"
+          />
+          <div className="flex items-center gap-4">
+            <div className="hidden text-right text-xs text-white/70 sm:block">
+              <div>Acceso privado</div>
+              <div className="font-medium text-white">
+                {state.project.clientName}
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-white/25 px-3 py-1.5 text-sm font-medium text-white/90 transition hover:bg-white/10"
+            >
+              <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
+              Salir
+            </button>
+          </div>
+        </header>
+        <div className="mx-auto max-w-3xl px-4 pb-12 pt-1">
+          <span className="pp-chip border border-pp-lime/30 bg-pp-lime/15 text-pp-lime">
+            <span className="pp-dot bg-pp-lime" /> Portal privado del proyecto
+          </span>
+          <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
+            Hola {state.project.clientName}
+          </h1>
+          <p className="mt-3 max-w-2xl leading-relaxed text-white/80">
+            Este es tu portal: seguí en vivo cómo va cada hito, qué está en
+            progreso y qué viene a continuación.
+          </p>
         </div>
-      </header>
+      </div>
 
-      <main className="mx-auto max-w-3xl px-4 py-8">
+      <main className="mx-auto max-w-3xl px-4 py-10">
         <ProjectTracker data={state.project} role="client" />
       </main>
+
+      <footer className="border-t border-slate-200">
+        <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-8 text-xs text-slate-500">
+          <img
+            src={BRAND.wordmarkLightSm}
+            alt="Potenciapp"
+            className="h-5 w-auto"
+          />
+          <span>Portal privado · Solo lectura</span>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -1,1 +1,59 @@
 @import "tailwindcss";
+
+/* Tokens de marca Potenciapp -> habilita utilidades bg-pp-*, text-pp-*, etc. */
+@theme {
+  --color-pp-lime: #1aff1a;
+  --color-pp-green: #1f7a3e;
+  --color-pp-green-dark: #155a2c;
+  --color-pp-ink: #0b1220;
+  --color-pp-paper: #f7f9f7;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  --pp-lime: #1aff1a;
+  --pp-green: #1f7a3e;
+  --pp-green-dark: #155a2c;
+  --pp-ink: #0b1220;
+  --pp-paper: #f7f9f7;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--pp-paper);
+  color: var(--pp-ink);
+}
+
+/* Gradiente de marca (único gradiente permitido). */
+.pp-grad {
+  background: linear-gradient(135deg, #0b1220 0%, #11261e 60%, #1f7a3e 100%);
+}
+
+/* Tarjeta de marca: borde sutil + sombra suave. */
+.pp-card {
+  background: #fff;
+  border: 1px solid rgba(11, 18, 32, 0.06);
+  box-shadow:
+    0 1px 0 rgba(11, 18, 32, 0.04),
+    0 8px 24px -16px rgba(11, 18, 32, 0.18);
+}
+
+/* Chip de estado. */
+.pp-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.pp-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  display: inline-block;
+}
