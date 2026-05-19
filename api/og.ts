@@ -52,6 +52,7 @@ export default async function handler(
     ? `Potenciapp · ${project.projectName}`
     : 'Potenciapp · Portal de proyecto';
   const url = `https://${host}/c/${encodeURIComponent(slug)}`;
+  const image = `https://${host}/api/og-image?v=1`;
 
   const meta = `
     <title>${esc(title)}</title>
@@ -61,9 +62,16 @@ export default async function handler(
     <meta property="og:description" content="${esc(DESCRIPTION)}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="${esc(url)}" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="${esc(image)}" />
+    <meta property="og:image:secure_url" content="${esc(image)}" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Potenciapp" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${esc(title)}" />
-    <meta name="twitter:description" content="${esc(DESCRIPTION)}" />`;
+    <meta name="twitter:description" content="${esc(DESCRIPTION)}" />
+    <meta name="twitter:image" content="${esc(image)}" />`;
 
   // Saca el <title> y metas OG/twitter/description que ya trae el shell,
   // para no dejar duplicados, y mete los nuestros antes de </head>.
