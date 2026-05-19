@@ -16,9 +16,19 @@ export default async function handler(
     if (req.method === 'GET') {
       assertAdmin(req); // la lista completa es solo para el panel admin
       const projects = await listProjects();
+      // Avance ponderado (igual que el front): pendiente 0 · en progreso 0.4
+      // · revisión 0.8 · completado 1.
+      const W = { pending: 0, in_progress: 0.4, client_review: 0.8, completed: 1 };
       const summary = projects.map((p) => {
         const total = p.milestones.length;
         const completed = p.milestones.filter((m) => m.status === 'completed').length;
+        const inProgress = p.milestones.filter(
+          (m) => m.status === 'in_progress' || m.status === 'client_review',
+        ).length;
+        const score = p.milestones.reduce(
+          (a, m) => a + (W[m.status] ?? 0),
+          0,
+        );
         return {
           slug: p.slug,
           clientName: p.clientName,
@@ -28,7 +38,8 @@ export default async function handler(
           progress: {
             total,
             completed,
-            percent: total === 0 ? 0 : Math.round((completed / total) * 100),
+            inProgress,
+            percent: total === 0 ? 0 : Math.round((score / total) * 100),
           },
         };
       });

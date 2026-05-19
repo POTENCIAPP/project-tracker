@@ -15,6 +15,7 @@ import type { Milestone, ProjectData } from '@/features/project-tracker';
 export interface ProgressSummary {
   total: number;
   completed: number;
+  inProgress: number;
   percent: number;
 }
 

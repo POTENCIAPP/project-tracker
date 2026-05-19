@@ -60,5 +60,8 @@ export interface ProjectTrackerProps {
 export interface ProgressSummary {
   total: number;
   completed: number;
+  /** Hitos en curso (en progreso + en revisión del cliente). */
+  inProgress: number;
+  /** Avance ponderado 0–100 (en progreso y revisión suman parcial). */
   percent: number;
 }

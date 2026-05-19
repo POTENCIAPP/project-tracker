@@ -5,13 +5,15 @@
 
 import type { ProgressSummary } from '../types';
 
-export function ProgressBar({ completed, total, percent }: ProgressSummary) {
+export function ProgressBar({ completed, total, inProgress, percent }: ProgressSummary) {
+  const label =
+    inProgress > 0
+      ? `${completed} completado${completed === 1 ? '' : 's'} · ${inProgress} en progreso`
+      : `${completed} de ${total} ${total === 1 ? 'hito completado' : 'hitos completados'}`;
   return (
     <div>
       <div className="mb-2 flex items-end justify-between gap-4">
-        <span className="text-sm font-medium text-slate-600">
-          {completed} de {total} {total === 1 ? 'hito completado' : 'hitos completados'}
-        </span>
+        <span className="text-sm font-medium text-slate-600">{label}</span>
         <span className="text-sm font-semibold tabular-nums text-slate-900">{percent}%</span>
       </div>
       <div

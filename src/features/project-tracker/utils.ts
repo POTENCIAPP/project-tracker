@@ -5,12 +5,26 @@
 
 import type { Milestone, ProgressSummary } from './types';
 
-/** Calcula el progreso global: hitos completados vs totales. */
+/**
+ * Avance ponderado: cada hito suma según su estado, no solo los terminados.
+ * pendiente 0 · en progreso 0.4 · revisión 0.8 · completado 1.
+ */
+const STATUS_WEIGHT: Record<Milestone['status'], number> = {
+  pending: 0,
+  in_progress: 0.4,
+  client_review: 0.8,
+  completed: 1,
+};
+
 export function computeProgress(milestones: Milestone[]): ProgressSummary {
   const total = milestones.length;
   const completed = milestones.filter((m) => m.status === 'completed').length;
-  const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
-  return { total, completed, percent };
+  const inProgress = milestones.filter(
+    (m) => m.status === 'in_progress' || m.status === 'client_review',
+  ).length;
+  const score = milestones.reduce((a, m) => a + STATUS_WEIGHT[m.status], 0);
+  const percent = total === 0 ? 0 : Math.round((score / total) * 100);
+  return { total, completed, inProgress, percent };
 }
 
 /** Devuelve una copia ordenada por el campo `order`. */
